@@ -1,0 +1,29 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.my-centered{
+  float: none;
+  margin: auto;
+  border-radius: 5px;
+  padding: 50px;
+}
+.my-opacity{
+  background-color: #f8f8ff;
+  opacity: .9;
+}
+.my-background{
+  background-image: url("./../images/login.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
