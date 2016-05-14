@@ -31,16 +31,21 @@ router.post('/login', function (req, res, next) {
 });
 
 router.post('/register', function (req, res, next) {
-    if (!req.body.username && !req.body.password) {
+    if (!req.body.username && !req.body.password && !req.body.email && !req.body.name && !req.body.batch) {
         return res.status(400).json({message: 'All fields are required.'});
     }
     var user = new User();
     user.username = req.body.username;
+    user.name = req.body.name;
+    user.batch = req.body.batch;
+    user.email = req.body.email;
+    user.course = req.body.course;
+    user.branch = req.body.branch;
     user.setPassword(req.body.password);
     user.save(function (err) {
         if (err) {
             console.log(err);
-            return next(err);
+            return next(err)    ;
         }
         return res.json({token: user.generateJWT()});
     });

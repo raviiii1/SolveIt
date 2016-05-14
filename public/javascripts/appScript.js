@@ -6,12 +6,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         templateUrl: './login.html',
         controller: 'AuthController'
     });
+    $stateProvider.state('register',{
+        url: '/register',
+        templateUrl: './register.html',
+        controller: 'AuthController'
+    });
     $urlRouterProvider.otherwise('login');
 }]);
 
 app.factory('authService', ['$http', '$window', function ($http, $window) {
     var authService = {};
-    authService.error = {message: ''};
+    authService.error = {};
     authService.setToken = function (token) {
         $window.localStorage['login-token'] = token;
         console.log("login_token "+ $window.localStorage['login-token']);
@@ -40,16 +45,24 @@ app.factory('authService', ['$http', '$window', function ($http, $window) {
 
 app.controller('AuthController', ['$scope', 'authService', function ($scope, authService) {
     $scope.message = "";
+    $scope.courseList = ['B.Tech','M.Tech', 'M.C.A.', 'B.C.A.', 'Ph.D'];
+    $scope.branchList = ['CSE', 'EE', 'ECE', 'IT', 'CHE', 'CE', 'ME', 'BT','PROD'];
+    $scope.batchList = [2012,2013,2014,2015,2016];
     $scope.login = function () {
-        authService.login({username: $scope.username, password: $scope.password});
+        authService.login($scope.log);
+        $scope.log = {};
     };
     $scope.register = function () {
-        authService.register({username: $scope.username, password: $scope.password});
+        authService.register($scope.reg);
+        $scope.reg = {};
     };
     $scope.logout = function () {
       authService.logout();
-
     };
+    $scope.closeError = function () {
+        $scope.message = "";
+        authService.error.message = "";
+    }
     $scope.$watch(function () {
         return authService.error
     }, function (newVal, oldVal) {

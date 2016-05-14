@@ -27,3 +27,7 @@ a {
   -webkit-background-size: cover;
   background-size: cover;
 }
+.glyphicon-remove-circle{
+  cursor: pointer;
+  margin-right: 10px;
+}

@@ -20,25 +20,83 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" id="username" type="text" ng-model="username"/>
+                <input class="form-control" id="username" type="text" ng-model="log.username"/>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" id="password" type="password" ng-model="password"/>
+                <input class="form-control" id="password" type="password" ng-model="log.password"/>
             </div>
             <br/>
-            <br/>
-
             <div class="form-group">
-                <button ng-click="login()" style="width: 50%" class="btn btn-primary" id="login" type="submit">Login</button>
-                <button ng-click="register()" style="width: 49%" class="btn btn-primary" id="register" type="submit">Register</button>
+                <button ng-click="login()" style="width: 100%" class="btn btn-primary" id="login" type="submit">Login
+                </button>
             </div>
+            <a href="#/register">Register</a>
         </form>
     </div>
     <br/>
     <div class="alert alert-danger col-md-5 my-centered my-opacity" ng-show="message">
+        <span class="glyphicon glyphicon-remove-circle" ng-click="closeError()"></span>
         Error : {{message}}
     </div>
 </script>
+
+<script type="text/ng-template" id="./register.html">
+    <div class="col-md-5 my-centered my-opacity">
+        <form role="form">
+            <h3>Register</h3><br/>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" type="text" ng-model="reg.name"/>
+            </div>
+            <div class="form-group pull-left" style="width: 32%;margin-right: 2%;">
+                <label for="batch">Batch</label>
+                <select class="form-control" id="batch" ng-model="reg.batch">
+                    <option ng-repeat="batch in batchList" value="{{batch}}">{{batch}}</option>
+                </select>
+            </div>
+            <div class="form-group pull-left" style="width: 32%;margin-right: 2%;">
+                <label for="course">Course</label>
+                <select class="form-control" id="course" ng-model="reg.course">
+                    <option ng-repeat="course in courseList" value="{{course}}">{{course}}</option>
+                </select>
+            </div>
+            <div class="form-group pull-left" style="width: 32%;">
+                <label for="branch">Branch Code</label>
+                <select class="form-control" id="branch" ng-model="reg.branch">
+                    <option ng-repeat="branch in branchList" value="{{branch}}">{{branch}}</option>
+                </select>
+            </div>
+
+            <div class="form-group pull-left" style="width: 49%;margin-right: 2%;">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" type="text" ng-model="reg.username"/>
+            </div>
+
+            <div class="form-group pull-left" style="width: 49%;">
+                <label for="password">Password</label>
+                <input class="form-control" id="password" type="password" ng-model="reg.password"/>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input class="form-control" id="email" type="email" ng-model="reg.email"/>
+            </div>
+            <br/>
+            <div class="form-group">
+                <button ng-click="register()" style="width: 100%" class="btn btn-primary" type="submit">Register
+                </button>
+            </div>
+            <a href="#/login">Login</a>
+        </form>
+    </div>
+    <br/>
+    <div class="alert alert-danger col-md-5 my-centered my-opacity" ng-show="message">
+        <span class="glyphicon glyphicon-remove-circle" ng-click="closeError()"></span>
+        Error : {{message}}
+    </div>
+</script>
+
 </body>
 </html>
