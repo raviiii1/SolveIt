@@ -22,7 +22,8 @@ router.post('/login', function (req, res, next) {
             return next(err);
         }
         if (user) {
-            return res.json({token: user.generateJWT()});
+            console.log(user.isAdmin);
+            return res.json({token: user.generateJWT(), isAdmin: user.isAdmin});
         } else {
             console.log(info);
             return res.status(400).json(info);
@@ -31,7 +32,7 @@ router.post('/login', function (req, res, next) {
 });
 
 router.post('/register', function (req, res, next) {
-    if (!req.body.username && !req.body.password && !req.body.email && !req.body.name && !req.body.batch) {
+    if (!req.body.username || !req.body.password || !req.body.email || !req.body.name || !req.body.batch) {
         return res.status(400).json({message: 'All fields are required.'});
     }
     var user = new User();
@@ -42,6 +43,7 @@ router.post('/register', function (req, res, next) {
     user.course = req.body.course;
     user.branch = req.body.branch;
     user.setPassword(req.body.password);
+    user.isAdmin = true;
     user.save(function (err) {
         if (err) {
             console.log(err);

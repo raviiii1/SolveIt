@@ -109,22 +109,61 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             }
         }]
     });
+    $stateProvider.state('main.notice',{
+        url: '/notice',
+        templateUrl: './notice.html',
+        controller: 'MainController',
+        onEnter: ['$state', 'authService', function($state, authService){
+            if(!authService.isLoggedIn()){
+                $state.go('login');
+            }
+        }]
+    });
+    $stateProvider.state('main.exams',{
+        url: '/exams',
+        templateUrl: './exams.html',
+        controller: 'ExamController',
+        onEnter: ['$state', 'authService', function($state, authService){
+            if(!authService.isLoggedIn()){
+                $state.go('login');
+            }
+        }]
+    });
+    $stateProvider.state('main.createExams',{
+        url: '/createExams',
+        templateUrl: './createExams.html',
+        controller: 'MainController',
+        onEnter: ['$state', 'authService', function($state, authService){
+            if(!authService.isLoggedIn()){
+                $state.go('login');
+            }
+        }]
+    });
     $urlRouterProvider.otherwise('login');
 }]);
 
 app.factory('authService', ['$http', '$window', '$state', function ($http, $window, $state) {
     var authService = {};
     authService.error = {};
+    authService.setAdmin = function(isAdmin){
+        $window.localStorage['login-admin'] = isAdmin;
+        console.log("login-admin "+ $window.localStorage['login-admin']);
+    };
     authService.setToken = function (token) {
         $window.localStorage['login-token'] = token;
         console.log("login_token "+ $window.localStorage['login-token']);
     };
     authService.getToken = function () {
         return $window.localStorage['login-token'];
-    }
+    };
+    authService.getAdmin = function () {
+        return $window.localStorage['login-admin'];
+        console.log("admin logged");
+    };
     authService.login = function (credentials) {
         return $http.post('/login', credentials).success(function (data) {
             authService.setToken(data.token);
+            authService.setAdmin(data.isAdmin);
         });
     };
     authService.register = function (credentials) {
@@ -135,6 +174,7 @@ app.factory('authService', ['$http', '$window', '$state', function ($http, $wind
     };
     authService.logout = function () {
         $window.localStorage.removeItem('login-token');
+        $window.localStorage.removeItem('login-admin');
         $state.go('login');
     };
     authService.isLoggedIn = function () {
@@ -152,11 +192,16 @@ app.factory('authService', ['$http', '$window', '$state', function ($http, $wind
 
 app.factory('mainService',['$http', function ($http) {
     var mainService = {};
-    mainService.getExams = function () {
+    return mainService;
+}]);
+
+app.factory('examService',['$http', function ($http) {
+    var examService = {};
+    examService.getExams = function () {
         return [
             {
                 name:'Automata CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'9:00am',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -165,7 +210,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO01'
             },{
                 name:'Automata CT2',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'12:00noon',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -174,7 +219,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO02'
             },{
                 name:'Computer Graphics CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'1:00pm',
                 subject:'CSE-103',
                 venue:'CCF1',
@@ -183,7 +228,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO03'
             },{
                 name:'Networking CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-106',
                 venue:'CCF2',
@@ -192,7 +237,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO04'
             },{
                 name:'Shell Programming CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-105',
                 venue:'CCF2',
@@ -201,7 +246,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO05'
             },{
                 name:'Algorithms CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-102',
                 venue:'CCF2',
@@ -210,7 +255,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO06'
             },{
                 name:'Algorithms CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-102',
                 venue:'CCF2',
@@ -219,7 +264,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO07'
             },{
                 name:'Automata CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -228,7 +273,7 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO08'
             },{
                 name:'Automata CT1',
-                date:'23/05/2016',
+                date:'Saturday, June 11, 2016',
                 time:'2:00pm',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -237,8 +282,8 @@ app.factory('mainService',['$http', function ($http) {
                 code:'CS15AUTO09'
             }];
     }
-    return mainService;
-}]);
+    return examService;
+}])
 
 app.controller('AuthController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
     $scope.message = "";
@@ -271,8 +316,12 @@ app.controller('MainController',['$scope', 'authService', 'mainService', functio
     $scope.logout = function () {
         authService.logout();
     };
+    $scope.isAdmin = authService.getAdmin();
+}]);
+
+app.controller('ExamController',['$scope', 'authService', 'examService', function ($scope, authService, examService) {
     $scope.selectExam = function (code) {
         console.log(code);
     };
-    $scope.exams = mainService.getExams();
-}]);
+    $scope.exams = examService.getExams();
+}])

@@ -4,7 +4,7 @@
 }
 
 body {
-    margin-top: 20px;
+    overflow-x: hidden;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -21,25 +21,18 @@ a {
     padding: 30px 50px 30px 50px;
 }
 
+.my-topMargin{
+    margin-top: 50px;
+}
+
 .my-padding-error {
     padding: 10px 50px 10px 50px;
 }
 
 .my-round-corners {
     border-radius: 1px;
-}
-
-.my-opacity {
-    /*background-color: #f8f8ff;*/
     border: #cccccc solid 1px;
-    opacity: 1;
 }
-
-.my-background {
-    /*background-image: url("./../images/login.jpg");*/
-    /*background-color: #cccccc;*/
-}
-
 .glyphicon-remove-circle {
     cursor: pointer;
     margin-right: 10px;
@@ -62,6 +55,7 @@ li{
 .list{
     background-color: #337AB7;
     opacity: .9;
+    padding: 0px;
     border-radius: 1px;
     text-align: center;
     line-height: 30px;
@@ -73,41 +67,35 @@ li{
 .list:hover{
     background-color: #2E6BA0;
 }
-
-/*.my-row:nth-child(odd)> div{*/
-    /*background-color: #eeeeee;*/
-/*}*/
-/*.my-row:hover > div{*/
-    /*background-color: #fce9ca;*/
-/*}*/
-/*.my-col-head{*/
-    /*padding: 10px 10px 10px 10px;*/
-    /*text-align: center;*/
-    /*border-radius: 5px 5px 0px 0px;*/
-    /*color: #fff;*/
-    /*font-weight: 600;*/
-    /*background-color: #408080;*/
-    /*border: 1px solid #ddd;*/
-    /*border: 1px solid rgba(86,61,124,.2);*/
-/*}*/
-
-/*.my-col{*/
-    /*cursor: pointer;*/
-    /*padding: 10px 10px 10px 10px;*/
-    /*text-align: center;*/
-    /*background-color: #fff;*/
-    /*background-color: rgba(256,256,256,1);*/
-    /*border: 1px solid #ddd;*/
-    /*border: 1px solid rgba(86,61,124,.2);*/
-/*}*/
-
+.list>a{
+    color: #ffffff;
+    list-style: none;
+    text-decoration: none;
+    display: block;
+}
+.list>a:active{
+    background-color: #ccc;
+}
 .my-textView{
     line-height: 30px;
 }
 
 .my-cardView{
-    margin-bottom: 20px;
+    /*background-color: #fdfdfd;*/
+    margin: 20px;
     border: solid 1px #cccccc;
     /*border-bottom: #337AB7 solid 2px;*/
     padding: 20px 30px 20px 30px;
+}
+.my-cardInfo{
+    line-height:25px;
+}
+.my-cardHead{
+    line-height:50px;
+    font-size: medium;
+}
+
+.my-navBar{
+    background-color: #337AB7;
+    margin-bottom: 20px;
 }

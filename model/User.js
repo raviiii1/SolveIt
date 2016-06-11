@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
     course: {type:String, required:true},
     branch: {type:String, required:true},
     username : {type:String, required:true, unique:true},
+    isAdmin : {type:Boolean, required:true},
     hash : String,
     salt : String
 });
