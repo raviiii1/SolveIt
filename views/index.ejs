@@ -14,7 +14,7 @@
     <ui-view></ui-view>
 </div>
 <script type="text/ng-template" id="./login.html">
-    <div class="col-md-5 my-centered my-opacity">
+    <div class="col-md-4 my-centered my-padding-container my-round-corners my-opacity">
         <form role="form">
             <h3>Login</h3><br/>
 
@@ -27,6 +27,7 @@
                 <input class="form-control" id="password" type="password" ng-model="log.password"/>
             </div>
             <br/>
+
             <div class="form-group">
                 <button ng-click="login()" style="width: 100%" class="btn btn-primary" id="login" type="submit">Login
                 </button>
@@ -35,14 +36,14 @@
         </form>
     </div>
     <br/>
-    <div class="alert alert-danger col-md-5 my-centered my-opacity" ng-show="message">
+    <div class="alert alert-danger col-md-4 my-centered my-padding-error my-opacity" ng-show="message">
         <span class="glyphicon glyphicon-remove-circle" ng-click="closeError()"></span>
         Error : {{message}}
     </div>
 </script>
 
 <script type="text/ng-template" id="./register.html">
-    <div class="col-md-5 my-centered my-opacity">
+    <div class="col-md-4 my-centered my-padding-container my-round-corners my-opacity">
         <form role="form">
             <h3>Register</h3><br/>
 
@@ -84,6 +85,7 @@
                 <input class="form-control" id="email" type="email" ng-model="reg.email"/>
             </div>
             <br/>
+
             <div class="form-group">
                 <button ng-click="register()" style="width: 100%" class="btn btn-primary" type="submit">Register
                 </button>
@@ -92,11 +94,65 @@
         </form>
     </div>
     <br/>
-    <div class="alert alert-danger col-md-5 my-centered my-opacity" ng-show="message">
+    <div class="alert alert-danger col-md-4 my-padding-error my-centered my-opacity" ng-show="message">
         <span class="glyphicon glyphicon-remove-circle" ng-click="closeError()"></span>
         Error : {{message}}
     </div>
 </script>
 
+<script type="text/ng-template" id="./main.html">
+    <div class="col-md-12 my-centered">
+        <div class="col-md-12">
+            <div class="col-md-12 pull-left my-opacity   pull-left my-round-corners">
+                <div class="col-md-6">
+                    <b>
+                        <span style="color: #337AB7; font-size: 50px; line-height: 100px;">
+                            Solve
+                        </span>
+                        <span style="color: #777777; font-size: 50px; line-height: 100px;">
+                            !t
+                        </span>
+                    </b>
+                </div>
+            </div>
+            <div class="col-md-12" style="background-color: #337AB7;margin-bottom: 20px;">
+                <ul >
+                    <li class="col-md-1 list pull-right" ng-click="logout()">Logout</li>
+                    <li class="col-md-1 list pull-right">Notices</li>
+                    <li class="col-md-1 list pull-right">Exams</li>
+                    <li class="col-md-1 list pull-right">Results</li>
+                    <li class="col-md-1 list pull-right">Syllabus</li>
+                    <li class="col-md-1 list pull-right">Profile</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12 pull-left" >
+            <div class="col-md-6" ng-repeat="exam in exams|examFilter:query" ng-click="selectExam(exam.code)">
+                <div class="my-round-corners my-opacity my-cardView">
+                    <div class="row my-row">
+                        <div class="col-md-12 my-col" style="line-height:50px;font-size: medium;">{{exam.name}}</div>
+                    </div>
+                    <div class="row my-row">
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Date :</b>{{exam.date}}</div>
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Subject :</b> {{exam.subject}}</div>
+                    </div>
+                    <div class="row my-row">
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Supervisor :</b>{{exam.supervisor}}</div>
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Venue :</b>{{exam.venue}}</div>
+                    </div>
+                    <div class="row my-row">
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Time :</b>{{exam.time}}</div>
+                        <div class="col-md-6 my-col"><b style="line-height:30px;font-size: smaller;">Duration :</b>{{exam.duration}}</div>
+                    </div>
+                    <div class="row my-row" style="margin-top: 10px;" >
+                        <div class="col-md-3 my-col"><input class="btn btn-default" type="button" value="Enroll for Exam"></div>
+                        <div class="col-md-3 my-col"><input class="btn btn-default" type="button" value="Take Exam"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 </body>
 </html>
