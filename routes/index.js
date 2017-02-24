@@ -43,7 +43,7 @@ router.post('/register', function (req, res, next) {
     user.course = req.body.course;
     user.branch = req.body.branch;
     user.setPassword(req.body.password);
-    user.isAdmin = true;
+    user.isAdmin = false;
     user.save(function (err) {
         if (err) {
             console.log(err);

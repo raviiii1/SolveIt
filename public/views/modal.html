@@ -1,0 +1,13 @@
+<div class="my-modal" id="id_modal">
+    <div class="my-modal-head">
+        {{title}}
+    </div>
+    <div class="my-modal-content">
+        <div ng-include="source"></div>
+    </div>
+    <div class="my-modal-footer">
+        <div class="my-button tooltip" ng-click="close($event);" style="background-image: url('../images/close.png');"> <span class="tooltip-text">Close</span></div>
+        <div class="my-button tooltip" ng-click="add($event);" style="background-image: url('../images/save.png');"> <span class="tooltip-text">Add</span></div>
+        <div class="my-button tooltip" ng-click="add($event);" style="background-image: url('../images/next.png');"> <span class="tooltip-text">Next</span></div>
+    </div>
+</div>

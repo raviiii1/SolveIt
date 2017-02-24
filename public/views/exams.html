@@ -1,0 +1,46 @@
+<div class="content-header">
+    <div class="content-heading">All Exams</div>
+    <div class="options">
+        <div><input class="search-text" type="text" /></div>
+        <div class="option-list tooltip" style="background-image: url('../images/search.png');"><span class="tooltip-text">Search</span></div>
+        <div class="option-list tooltip" ng-click="customDialog($event)" style="background-image: url('../images/add.png');"><span class="tooltip-text">Create</span></div>
+        <my-modal id="create_exam_modal" title="modalTitle" source="modalSource"></my-modal>
+    </div>
+    <div class="my-hr"></div>
+</div>
+<div class="sub-content">
+    <div ng-repeat="exam in exams|examFilter:query" ng-click="selectExam(exam.code)">
+        <div class="my-round-corners my-cardView">
+            <div class="my-row">
+                <div class="my-col my-cardHead">{{exam.name}}</div>
+            </div>
+            <div class="my-row">
+                <div class="my-col my-cardInfo"><b>Subject : </b>{{exam.subject}}</div>
+                <div class="my-col my-cardInfo"><b>Supervisor : </b>{{exam.supervisor}}</div>
+            </div>
+            <div class="my-row">
+                <div class="my-col my-cardInfo"><b>When : </b>{{exam.duration}} | {{exam.time}} | {{exam.date}}</div>
+                <div class="my-col my-cardInfo"><b>Where : </b>{{exam.venue}}</div>
+            </div>
+            <div class="my-row" style="margin-top: 10px;" ng-hide="isAdmin">
+                <div class="my-col my-cardInfo">
+                    <input class="btn btn-primary" type="button" value="Enroll for Exam"/>
+                </div>
+                <div class="my-col my-cardInfo">
+                    <input class="btn btn-primary" type="button" value="Take Exam"/>
+                </div>
+            </div>
+            <div class="my-button-row" style="margin-top: 10px;" ng-show="isAdmin">
+                <div class=" my-col">
+                    <div class="my-button tooltip" style="background-image: url('../images/delete.png');"> <span class="tooltip-text">Delete</span></div>
+                </div>
+                <div class="my-col">
+                    <div class="my-button tooltip" style="background-image: url('../images/duplicate.png');"> <span class="tooltip-text">Duplicate</span></div>
+                </div>
+                <div class="my-col">
+                    <div class="my-button tooltip" style="background-image: url('../images/edit.png');"> <span class="tooltip-text">Edit</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

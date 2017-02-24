@@ -78,10 +78,10 @@ app.filter('examFilter', function () {
     }
 });
 
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider.state('login', {
         url: '/login',
-        templateUrl: './login.html',
+        templateUrl: 'views/login.html',
         controller: 'AuthController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(authService.isLoggedIn()){
@@ -91,9 +91,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     });
     $stateProvider.state('register',{
         url: '/register',
-        templateUrl: './register.html',
+        templateUrl: 'views/register.html',
         controller: 'AuthController',
-        onEnter: ['$state', 'authService', function($state, authService){
+        onEnter: ['$state', 'authService',   function($state, authService){
             if(authService.isLoggedIn()){
                 $state.go('main');
             }
@@ -101,7 +101,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     });
     $stateProvider.state('main',{
         url: '/main',
-        templateUrl: './main.html',
+        templateUrl: 'views/main.html',
         controller: 'MainController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(!authService.isLoggedIn()){
@@ -111,7 +111,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     });
     $stateProvider.state('main.notice',{
         url: '/notice',
-        templateUrl: './notice.html',
+        templateUrl: 'views/notice.html',
         controller: 'MainController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(!authService.isLoggedIn()){
@@ -121,7 +121,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     });
     $stateProvider.state('main.exams',{
         url: '/exams',
-        templateUrl: './exams.html',
+        templateUrl: 'views/exams.html',
         controller: 'ExamController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(!authService.isLoggedIn()){
@@ -131,7 +131,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     });
     $stateProvider.state('main.createExams',{
         url: '/createExams',
-        templateUrl: './createExams.html',
+        templateUrl: 'views/createExams.html',
         controller: 'MainController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(!authService.isLoggedIn()){
@@ -142,7 +142,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.otherwise('login');
 }]);
 
-app.factory('authService', ['$http', '$window', '$state', function ($http, $window, $state) {
+app.factory('authService',['$http', '$window', '$state', function ($http, $window, $state) {
     var authService = {};
     authService.error = {};
     authService.setAdmin = function(isAdmin){
@@ -201,7 +201,7 @@ app.factory('examService',['$http', function ($http) {
         return [
             {
                 name:'Automata CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'9:00am',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -210,7 +210,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO01'
             },{
                 name:'Automata CT2',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'12:00noon',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -219,7 +219,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO02'
             },{
                 name:'Computer Graphics CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'1:00pm',
                 subject:'CSE-103',
                 venue:'CCF1',
@@ -228,7 +228,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO03'
             },{
                 name:'Networking CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-106',
                 venue:'CCF2',
@@ -237,7 +237,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO04'
             },{
                 name:'Shell Programming CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-105',
                 venue:'CCF2',
@@ -246,7 +246,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO05'
             },{
                 name:'Algorithms CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-102',
                 venue:'CCF2',
@@ -255,7 +255,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO06'
             },{
                 name:'Algorithms CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-102',
                 venue:'CCF2',
@@ -264,7 +264,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO07'
             },{
                 name:'Automata CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -273,7 +273,7 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO08'
             },{
                 name:'Automata CT1',
-                date:'Saturday, June 11, 2016',
+                date:'11/06/2016',
                 time:'2:00pm',
                 subject:'CSE-101',
                 venue:'CCF2',
@@ -282,10 +282,16 @@ app.factory('examService',['$http', function ($http) {
                 code:'CS15AUTO09'
             }];
     }
+
+    examService.createExams = function (exam) {
+        return $http.post('/createExam',exam).success(function () {
+            console.log(data);
+        })
+    }
     return examService;
 }])
 
-app.controller('AuthController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
+app.controller('AuthController',['$scope', '$state', 'authService', function ($scope, $state, authService) {
     $scope.message = "";
     $scope.courseList = ['B.Tech','M.Tech', 'M.C.A.', 'B.C.A.', 'Ph.D'];
     $scope.branchList = ['CSE', 'EE', 'ECE', 'IT', 'CHE', 'CE', 'ME', 'BT','PROD'];
@@ -323,5 +329,38 @@ app.controller('ExamController',['$scope', 'authService', 'examService', functio
     $scope.selectExam = function (code) {
         console.log(code);
     };
+    $scope.createExam = function (exam) {
+        examService.createExams(exam).error(function (error) {
+            $scope.message = error.message;
+        }).then(function () {
+        });
+    };
     $scope.exams = examService.getExams();
-}])
+
+    $scope.modalTitle = "Create Exams"
+    $scope.modalSource = "views/createExams.html";
+
+    $scope.customDialog = function ($event) {
+        document.getElementById("create_exam_modal").style.display = "block";
+        document.getElementById("id_modal").style.display = "block";
+    };
+}]);
+
+app.directive("myModal",[function(){
+    return {
+        restrict : 'AE',
+        templateUrl : 'views/modal.html',
+        scope : {
+            source : "=",
+            title : "="
+        },
+        controller : ['$scope', 'examService', function ($scope, examService) {
+
+        }],
+        link : function (scope, element, attrs) {
+            scope.close = function($event){
+                element.css({'display':'none'});
+            };
+        }
+    }
+}]);

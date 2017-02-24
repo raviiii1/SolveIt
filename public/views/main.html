@@ -1,0 +1,41 @@
+<div>
+    <header>
+        <div class="my-header">
+            <b class="logo">
+                <span class="logo-part-one">Solve</span><span class="logo-part-two">!t</span>
+            </b>
+            <i class="tag-line">
+                <span class="tag-line-text">An Online Examination Portal</span>
+            </i>
+        </div>
+        <div class="my-navBar">
+            <ul ng-hide="isAdmin">
+                <li class="list" ng-click="logout()"><a ui-sref="#">Logout</a></li>
+                <li class="list"><a ui-sref=".notice">Notices</a></li>
+                <li class="list"><a ui-sref="#">Results</a></li>
+                <li class="list"><a ui-sref="#">Syllabus</a></li>
+                <li class="list"><a ui-sref=".exams">Exams</a></li>
+                <li class="list"><a ui-sref="#">Profile</a></li>
+            </ul>
+            <ul ng-show="isAdmin">
+                <li class="list" ng-click="logout()"><a ui-sref="#">Logout</a></li>
+                <li class="list"><a ui-sref=".notice">Notices</a></li>
+                <li class="list"><a ui-sref="#">Results</a></li>
+                <li class="list"><a ui-sref="#">Syllabus</a></li>
+                <li class="list"><a ui-sref=".exams">Exams</a></li>
+                <li class="list"><a ui-sref=".createExams">Profile</a></li>
+            </ul>
+        </div>
+        <div class="my-hr"></div>
+    </header>
+    <container>
+        <div class="my-container">
+            <ui-view></ui-view>
+        </div>
+    </container>
+    <footer>
+        <div class="my-footer">
+            All copyrights belong to <b><i>Ravi Prakash</i></b>.
+        </div>
+    </footer>
+</div>
