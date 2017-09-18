@@ -131,7 +131,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
     });
     $stateProvider.state('main.createExams',{
         url: '/createExams',
-        templateUrl: 'views/createExams.html',
+        templateUrl: 'views/newExam.html',
         controller: 'MainController',
         onEnter: ['$state', 'authService', function($state, authService){
             if(!authService.isLoggedIn()){
@@ -197,99 +197,112 @@ app.factory('mainService',['$http', function ($http) {
 
 app.factory('examService',['$http', function ($http) {
     var examService = {};
+    var allExams = [
+        {
+            name:'Automata CT1',
+            date:'11/06/2016',
+            time:'9:00am',
+            subject:'CSE-101',
+            venue:'CCF2',
+            duration:'3 hrs',
+            supervisor:'Ranvijay Singh',
+            code:'CS15AUTO01'
+        },{
+            name:'Automata CT2',
+            date:'11/06/2016',
+            time:'12:00noon',
+            subject:'CSE-101',
+            venue:'CCF2',
+            duration:'3 hrs',
+            supervisor:'Ranvijay Singh',
+            code:'CS15AUTO02'
+        },{
+            name:'Computer Graphics CT1',
+            date:'11/06/2016',
+            time:'1:00pm',
+            subject:'CSE-103',
+            venue:'CCF1',
+            duration:'3 hrs',
+            supervisor:'Neeraj Tyagi',
+            code:'CS15AUTO03'
+        },{
+            name:'Networking CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-106',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Neeraj Tyagi',
+            code:'CS15AUTO04'
+        },{
+            name:'Shell Programming CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-105',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Divya Kumar',
+            code:'CS15AUTO05'
+        },{
+            name:'Algorithms CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-102',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Divya Kumar',
+            code:'CS15AUTO06'
+        },{
+            name:'Algorithms CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-102',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Divya Kumar',
+            code:'CS15AUTO07'
+        },{
+            name:'Automata CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-101',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Ranvijay Singh',
+            code:'CS15AUTO08'
+        },{
+            name:'Automata CT1',
+            date:'11/06/2016',
+            time:'2:00pm',
+            subject:'CSE-101',
+            venue:'CCF2',
+            duration:'2 hrs',
+            supervisor:'Ranvijay Singh',
+            code:'CS15AUTO09'
+        }
+    ];
     examService.getExams = function () {
-        return [
-            {
-                name:'Automata CT1',
-                date:'11/06/2016',
-                time:'9:00am',
-                subject:'CSE-101',
-                venue:'CCF2',
-                duration:'3 hrs',
-                supervisor:'Ranvijay Singh',
-                code:'CS15AUTO01'
-            },{
-                name:'Automata CT2',
-                date:'11/06/2016',
-                time:'12:00noon',
-                subject:'CSE-101',
-                venue:'CCF2',
-                duration:'3 hrs',
-                supervisor:'Ranvijay Singh',
-                code:'CS15AUTO02'
-            },{
-                name:'Computer Graphics CT1',
-                date:'11/06/2016',
-                time:'1:00pm',
-                subject:'CSE-103',
-                venue:'CCF1',
-                duration:'3 hrs',
-                supervisor:'Neeraj Tyagi',
-                code:'CS15AUTO03'
-            },{
-                name:'Networking CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-106',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Neeraj Tyagi',
-                code:'CS15AUTO04'
-            },{
-                name:'Shell Programming CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-105',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Divya Kumar',
-                code:'CS15AUTO05'
-            },{
-                name:'Algorithms CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-102',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Divya Kumar',
-                code:'CS15AUTO06'
-            },{
-                name:'Algorithms CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-102',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Divya Kumar',
-                code:'CS15AUTO07'
-            },{
-                name:'Automata CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-101',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Ranvijay Singh',
-                code:'CS15AUTO08'
-            },{
-                name:'Automata CT1',
-                date:'11/06/2016',
-                time:'2:00pm',
-                subject:'CSE-101',
-                venue:'CCF2',
-                duration:'2 hrs',
-                supervisor:'Ranvijay Singh',
-                code:'CS15AUTO09'
-            }];
+        return allExams;
     }
 
-    examService.createExams = function (exam) {
-        return $http.post('/createExam',exam).success(function () {
+    examService.addNewExam = function (exam) {
+        exam.general.code = (function(str){
+            var hash = 0;
+            if (str.length == 0) return hash;
+            for (var i = 0; i < str.length; i++) {
+                var char = str.charCodeAt(i);
+                hash = ((hash<<5)-hash)+char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash;
+        })((exam.general.startDate+exam.general.subject+exam.general.venue).toString());
+        allExams.push(exam.general);
+        /*return $http.post('/createExam',exam).success(function () {
             console.log(data);
-        })
+        });*/
     }
     return examService;
-}])
+}]);
 
 app.controller('AuthController',['$scope', '$state', 'authService', function ($scope, $state, authService) {
     $scope.message = "";
@@ -326,21 +339,36 @@ app.controller('MainController',['$scope', 'authService', 'mainService', functio
 }]);
 
 app.controller('ExamController',['$scope', 'authService', 'examService', function ($scope, authService, examService) {
+    $scope.scopeForDirective = {};
     $scope.selectExam = function (code) {
         console.log(code);
     };
-    $scope.createExam = function (exam) {
-        examService.createExams(exam).error(function (error) {
-            $scope.message = error.message;
-        }).then(function () {
-        });
-    };
     $scope.exams = examService.getExams();
-
-    $scope.modalTitle = "Create Exams"
-    $scope.modalSource = "views/createExams.html";
-
-    $scope.customDialog = function ($event) {
+    $scope.addNewExam = function (returnsObject) {
+        if(returnsObject.exam) {
+            examService.addNewExam(returnsObject.exam);
+            /*
+             examService.addNewExam(returnsObject.exam).error(function (error) {
+             $scope.message = error.message;
+             }).then(function () {
+             });*/
+        }
+    };
+    $scope.scopeForDirective.getNumberArray = function(num){
+        return new Array(num);
+    };
+    $scope.initNewExamModal = function () {
+        $scope.results={};
+        $scope.modalTitle = "New Exam";
+        $scope.modalSource = "views/newExam.html";
+        $scope.modalTabs = [
+            {'tabName': 'General', 'tabId': 'generalTab'},
+            {'tabName': 'Details', 'tabId': 'detailsTab'}
+        ];
+        $scope.modalCustomScope =  $scope.scopeForDirective;
+    };
+    $scope.newExamModal = function ($event) {
+        $scope.initNewExamModal();
         document.getElementById("create_exam_modal").style.display = "block";
         document.getElementById("id_modal").style.display = "block";
     };
@@ -351,16 +379,70 @@ app.directive("myModal",[function(){
         restrict : 'AE',
         templateUrl : 'views/modal.html',
         scope : {
-            source : "=",
-            title : "="
+            source : "@",
+            title : "@",
+            tabs : "=",
+            submit : "&",
+            customScope : "="
         },
         controller : ['$scope', 'examService', function ($scope, examService) {
-
+            $scope.returns = {};
+            $scope.tabs = {};
+            $scope.next = function () {
+                var index = -1;
+                for(index = 0; index < $scope.tabs.length;index++){
+                    if($scope.tabs[index].tabId == $scope.currentActiveTab){
+                        if(index < $scope.tabs.length-1)
+                            index++;
+                        break;
+                    }
+                }
+                $scope.switchTabs($scope.tabs[index].tabId);
+            }
+            $scope.previous = function () {
+                var index = $scope.tabs.length;
+                for(index = $scope.tabs.length-1; index >= 0;index--){
+                    if($scope.tabs[index].tabId == $scope.currentActiveTab){
+                        if(index > 0)
+                            index--;
+                        break;
+                    }
+                }
+                $scope.switchTabs($scope.tabs[index].tabId);
+            };
+            $scope.switchTabs = function (tabId) {
+                if(tabId === undefined){
+                    tabId = $scope.tabs[0].tabId;
+                }
+                if($scope.currentActiveTab !== tabId) {
+                    document.getElementById($scope.currentActiveTab).style.display = "none";
+                    document.getElementById("tab_" + $scope.currentActiveTab).className = "my-modal-tab";
+                    $scope.currentActiveTab = tabId;
+                    document.getElementById(tabId).style.display = "block";
+                    document.getElementById("tab_" + tabId).className = "my-modal-tab-hover";
+                }
+                $scope.saveWithoutClose();
+            };
+            $scope.save = function(){
+                $scope.saveWithoutClose();
+                $scope.returns = {}; // its mandatory to reset 'returns', otherwise the previous exam gets modified too. See more about - Call By Sharing.
+                $scope.close();
+            };
+            $scope.saveWithoutClose = function(){
+                $scope.submit({returnsObject : $scope.returns}); // Its mandatory to map the argument ($scope.returns) as an object ({returnsObject : ...}), in order to pass it to outer $scope.
+            };
         }],
         link : function (scope, element, attrs) {
-            scope.close = function($event){
+            scope.close = function(){
                 element.css({'display':'none'});
+                scope.currentActiveTab = 'generalTab';
             };
+            scope.$watchCollection("tabs", function( newValue, oldValue ) {// waiting for tabs to be populated, so that currentActiveTab can be initialized.
+                //if modal is 'tabbed' and currentActiveTab is undefined, yet.
+                if(scope.tabs.length >1 && !scope.currentActiveTab) {
+                    scope.currentActiveTab = scope.tabs[0].tabId;
+                }
+            });
         }
     }
 }]);

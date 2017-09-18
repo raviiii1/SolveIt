@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
-
 require('./model/User');
 require('./config/passport');
 
@@ -29,7 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-mongoose.connect('mongodb://localhost/SolveIt');
+var promise = mongoose.connect('mongodb://localhost:27017/SolveIt', {
+    useMongoClient: true
+}).then(function () {
+    console.log("Connected and listening at 3000.");
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

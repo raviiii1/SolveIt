@@ -1,13 +1,22 @@
 <div class="my-modal" id="id_modal">
     <div class="my-modal-head">
         {{title}}
+        {{tabsBar}}
+    </div>
+    <div class="my-modal-tabs" ng-show="tabs.length > 1">
+        <ul>
+            <li class="my-modal-tab" ng-repeat="tab in tabs">
+                <a id="tab_{{tab.tabId}}" ng-click="switchTabs(tab.tabId);" ng-class="{'my-modal-tab-hover' : $index === 0}">{{tab.tabName}}</a>
+            </li>
+        </ul>
     </div>
     <div class="my-modal-content">
         <div ng-include="source"></div>
     </div>
     <div class="my-modal-footer">
-        <div class="my-button tooltip" ng-click="close($event);" style="background-image: url('../images/close.png');"> <span class="tooltip-text">Close</span></div>
-        <div class="my-button tooltip" ng-click="add($event);" style="background-image: url('../images/save.png');"> <span class="tooltip-text">Add</span></div>
-        <div class="my-button tooltip" ng-click="add($event);" style="background-image: url('../images/next.png');"> <span class="tooltip-text">Next</span></div>
+        <div class="my-button my-tooltip glyphicon glyphicon-remove" ng-click="close();"><span class="my-tooltip-text">Close</span></div>
+        <div class="my-button my-tooltip glyphicon glyphicon-floppy-disk" ng-click="save();"><span class="my-tooltip-text">Add</span></div>
+        <div class="my-button my-tooltip glyphicon glyphicon-triangle-right" ng-show="tabs.length > 1" ng-click="next();"><span class="my-tooltip-text">Next</span></div>
+        <div class="my-button my-tooltip glyphicon glyphicon-triangle-left" ng-show="tabs.length > 1" ng-click="previous();"><span class="my-tooltip-text">Previous</span></div>
     </div>
 </div>

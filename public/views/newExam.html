@@ -1,0 +1,53 @@
+<div class="sub-content">
+    <div id="generalTab" style="display: block">
+        <h4><u>General</u></h4>
+            <div class="form-field width-100">
+                <label class="field-label width-15" for="name">Exam Name :</label>
+                <input class="field-input width-85" placeholder="Name of exam." type="text" name="name" id="name" ng-model="returns.exam.general.name"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="supervisor">Supervisor :</label>
+                <input class="field-input width-70" type="text" placeholder="Name a Superviser" name="supervisor" id="supervisor" ng-model="returns.exam.general.supervisor"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="subject">Subject :</label>
+                <input class="field-input width-70" type="text" placeholder="Subject Name" name="subject" id="subject" ng-model="returns.exam.general.subject"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="startDate">Starts At :</label>
+                <input class="field-input width-70" placeholder="03/03/1991" type="datetime-local" name="startDate" id="startDate" ng-model="returns.exam.general.startDate"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="endDate">Ends At :</label>
+                <input class="field-input width-70" placeholder="03/03/1991" type="datetime-local" name="endDate" id="endDate" ng-model="returns.exam.general.endDate"/>
+
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="venue">Venue :</label>
+                <input class="field-input width-70" placeholder="Location" type="text" name="venue" id="venue" ng-model="returns.exam.general.venue"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="sections">Sections :</label>
+                <input class="field-input width-70" placeholder="Number of Section" type="number" name="sections" id="sections" ng-model="returns.exam.general.sections"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="maxmarks">Max Marks :</label>
+                <input class="field-input width-70" type="number" placeholder="Maximum Marks" name="maxmarks" id="maxmarks" ng-model="returns.exam.general.maxmarks"/>
+            </div>
+            <div class="form-field width-50">
+                <label class="field-label width-30" for="passmarks">Pass Marks :</label>
+                <input class="field-input width-70" type="number" placeholder="Passing Marks" name="passmarks" id="passmarks" ng-model="returns.exam.general.passmarks"/>
+            </div>
+            <div class="my-infoCard">
+                <div class="my-info-icon"></div>
+                <div class="my-info">A combination of Subject, Venue, and Start date-time should be unique.</div>
+            </div>
+    </div>
+    <div id="detailsTab" style="display: none">
+    <h4><u>Details</u></h4>
+            <div class="form-field width-100" ng-repeat="section in customScope.getNumberArray(returns.exam.general.sections) track by $index">
+
+                Section {{$index+1}}
+            </div>
+    </div>
+</div>

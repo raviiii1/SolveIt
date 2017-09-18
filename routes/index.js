@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-    console.log(req.body.username + " " + req.body.password);
     if (!req.body.username && !req.body.password) {
         return res.status(400).json({message: 'All fields are required.'});
     }
@@ -22,9 +21,11 @@ router.post('/login', function (req, res, next) {
             return next(err);
         }
         if (user) {
+          console.log(req.body.username + "+++" + req.body.password);
             console.log(user.isAdmin);
             return res.json({token: user.generateJWT(), isAdmin: user.isAdmin});
         } else {
+          console.log(req.body.username + "---" + req.body.password);
             console.log(info);
             return res.status(400).json(info);
         }
@@ -47,7 +48,7 @@ router.post('/register', function (req, res, next) {
     user.save(function (err) {
         if (err) {
             console.log(err);
-            return next(err)    ;
+            return next(err) ;
         }
         return res.json({token: user.generateJWT()});
     });
